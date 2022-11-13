@@ -315,7 +315,27 @@ public class KsebAdmin {
                     break;
                 case 8:
                     System.out.println("Top 2 bill paying consumer");
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/kseb_db", "root", "");
+                        String sql = "SELECT c.Name,c.Address,b.`bill`, b.`total_unit` FROM `bill` b JOIN customer c ON b.User_Id=c.id ORDER BY b.`bill`DESC LIMIT 2";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while(rs.next()){
+                            name = rs.getString("c.Name");
+                            address = rs.getString("c.Address");
+                            int bill = rs.getInt("b.bill");
+                            int total = rs.getInt("total_unit");
+                            System.out.println("name ="+name);
+                            System.out.println("address ="+address);
+                            System.out.println("total bill = "+bill);
+                            System.out.println("total unit ="+total+'\n');
 
+                        }
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 9:
                     System.exit(0);
