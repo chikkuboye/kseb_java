@@ -148,7 +148,28 @@ public class KsebAdmin {
                     break;
                 case 3:
                     System.out.println("view the details");
-
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/kseb_db", "root", "");
+                        String sql = "SELECT `Name`, `Address`, `Phone_num`, `Cust_code`, `Email` FROM `customer` ";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while(rs.next()){
+                            name = rs.getString("Name");
+                            address = rs.getString("Address");
+                            phone = rs.getString("Phone_num");
+                            custCode = rs.getInt("Cust_code");
+                            email = rs.getString("Email");
+                            System.out.println("name = "+name);
+                            System.out.println("address = "+address);
+                            System.out.println("phone number = "+phone);
+                            System.out.println("customer code = "+custCode);
+                            System.out.println("Email id = "+email+'\n');
+                        }
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
 
                 case 4:
