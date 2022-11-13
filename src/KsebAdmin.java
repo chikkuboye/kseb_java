@@ -202,6 +202,20 @@ public class KsebAdmin {
 
                 case 5:
                     System.out.println("Delete the details");
+                    System.out.println("enter the cust code ");
+                    custCode = sc.nextInt();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/kseb_db", "root", "");
+                        String sql = "DELETE FROM `customer` WHERE `Cust_code`='"+custCode+"'";
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate(sql);
+                        System.out.println("Deleted successfully");
+
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
 
                     break;
 
