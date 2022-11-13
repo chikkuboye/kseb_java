@@ -1,6 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.Scanner;
 
 public class KsebAdmin {
@@ -54,6 +52,98 @@ public class KsebAdmin {
                     break;
                 case 2:
                     System.out.println("You entered into searching section !!!");
+                    System.out.println("1.search using name");
+                    System.out.println("2.search using phone number");
+                    System.out.println("3.search using code");
+                    System.out.println("4.Exit");
+                    System.out.println("enter the choice");
+                    int choice1 = sc.nextInt();
+                    switch (choice1){
+                        case 1:
+                            System.out.println("enter the name");
+                            name = sc.next();
+                            try{
+                                Class.forName("com.mysql.jdbc.Driver");
+                                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/kseb_db", "root", "");
+                                String sql = "SELECT `Name`, `Address`, `Phone_num`, `Cust_code`, `Email` FROM `customer` WHERE `Name`='"+name+"'";
+                                Statement stmt = con.createStatement();
+                                ResultSet rs = stmt.executeQuery(sql);
+                                while(rs.next()){
+                                    name = rs.getString("Name");
+                                    address = rs.getString("Address");
+                                    phone = rs.getString("Phone_num");
+                                    custCode = rs.getInt("Cust_code");
+                                    email = rs.getString("Email");
+                                    System.out.println("name = "+name);
+                                    System.out.println("address = "+address);
+                                    System.out.println("phone number = "+phone);
+                                    System.out.println("customer code = "+custCode);
+                                    System.out.println("Email id = "+email+'\n');
+                                }
+                            }
+                            catch (Exception e){
+                                System.out.println(e);
+                            }
+                            break;
+                        case 2:
+                            System.out.println("enter the phone number");
+                            phone = sc.next();
+                            try{
+                                Class.forName("com.mysql.jdbc.Driver");
+                                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/kseb_db", "root", "");
+                                String sql = "SELECT `Name`, `Address`, `Phone_num`, `Cust_code`, `Email` FROM `customer` WHERE `Phone_num`='"+phone+"'";
+                                Statement stmt = con.createStatement();
+                                ResultSet rs = stmt.executeQuery(sql);
+                                while(rs.next()){
+                                    name = rs.getString("Name");
+                                    address = rs.getString("Address");
+                                    phone = rs.getString("Phone_num");
+                                    custCode = rs.getInt("Cust_code");
+                                    email = rs.getString("Email");
+                                    System.out.println("name = "+name);
+                                    System.out.println("address = "+address);
+                                    System.out.println("phone number = "+phone);
+                                    System.out.println("customer code = "+custCode);
+                                    System.out.println("Email id = "+email+'\n');
+                                }
+                            }
+                            catch (Exception e){
+                                System.out.println(e);
+                            }
+                            break;
+
+                        case 3:
+                            System.out.println("enter the customer code ");
+                            custCode = sc.nextInt();
+                            try{
+                                Class.forName("com.mysql.jdbc.Driver");
+                                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/kseb_db", "root", "");
+                                String sql = "SELECT `Name`, `Address`, `Phone_num`, `Cust_code`, `Email` FROM `customer` WHERE `Cust_code`='"+custCode+"'";
+                                Statement stmt = con.createStatement();
+                                ResultSet rs = stmt.executeQuery(sql);
+                                while(rs.next()){
+                                    name = rs.getString("Name");
+                                    address = rs.getString("Address");
+                                    phone = rs.getString("Phone_num");
+                                    custCode = rs.getInt("Cust_code");
+                                    email = rs.getString("Email");
+                                    System.out.println("name = "+name);
+                                    System.out.println("address = "+address);
+                                    System.out.println("phone number = "+phone);
+                                    System.out.println("customer code = "+custCode);
+                                    System.out.println("Email id = "+email+'\n');
+                                }
+                            }
+                            catch (Exception e){
+                                System.out.println(e);
+                            }
+                            break;
+
+                        case 4:
+                            System.exit(0);
+
+                    }
+
 
                     break;
                 case 3:
