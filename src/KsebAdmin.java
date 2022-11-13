@@ -1,6 +1,8 @@
 import java.sql.*;
+import java.util.Calendar;
+import java.util.Random;
 import java.util.Scanner;
-
+import java.util.Date;
 public class KsebAdmin {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -278,11 +280,62 @@ public class KsebAdmin {
 
                 case 7:
                     System.out.println("view the bills");
-
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/kseb_db", "root", "");
+                        String sql = "SELECT  c.Name,c.Address,b.`month`, b.`year`, b.`bill`, b.`paid status`, b.`bill date`, b.`due_date`, b.`total_unit`, b.`invoice_num` FROM `bill` b JOIN customer c ON b.User_Id=c.id";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while(rs.next()){
+                            name = rs.getString("c.Name");
+                            address = rs.getString("c.Address");
+                            int month1 = rs.getInt("b.month");
+                            int year1 = rs.getInt("b.year");
+                            int bill = rs.getInt("b.bill");
+                            String sta = rs.getString("b.paid status");
+                            String date1 = rs.getString("b.bill date");
+                            String date2 = rs.getString("b.due_date");
+                            int total = rs.getInt("b.total_unit");
+                            int invoice = rs.getInt("b.invoice_num");
+                            System.out.println("name ="+name);
+                            System.out.println("address ="+address);
+                            System.out.println("month ="+month1);
+                            System.out.println("year = "+year1);
+                            System.out.println("total bill = "+bill);
+                            System.out.println("status="+sta);
+                            System.out.println("bill date="+date1);
+                            System.out.println("due date="+date2);
+                            System.out.println("total unit ="+total);
+                            System.out.println("invoice ="+invoice+'\n');
+                        }
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 8:
                     System.out.println("Top 2 bill paying consumer");
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/kseb_db", "root", "");
+                        String sql = "SELECT c.Name,c.Address,b.`bill`, b.`total_unit` FROM `bill` b JOIN customer c ON b.User_Id=c.id ORDER BY b.`bill`DESC LIMIT 2";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while(rs.next()){
+                            name = rs.getString("c.Name");
+                            address = rs.getString("c.Address");
+                            int bill = rs.getInt("b.bill");
+                            int total = rs.getInt("total_unit");
+                            System.out.println("name ="+name);
+                            System.out.println("address ="+address);
+                            System.out.println("total bill = "+bill);
+                            System.out.println("total unit ="+total+'\n');
 
+                        }
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
                     break;
                 case 9:
                     System.exit(0);
