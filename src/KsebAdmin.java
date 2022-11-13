@@ -1,3 +1,6 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.Scanner;
 
 public class KsebAdmin {
@@ -21,6 +24,32 @@ public class KsebAdmin {
             switch (choice){
                 case 1:
                     System.out.println("You entered into insert section !!!");
+                    System.out.println("name");
+                    String name = sc.next();
+                    System.out.println("address");
+                    String address = sc.next();
+                    System.out.println("phone");
+                    String phone = sc.next();
+                    System.out.println("cust code");
+                    int custCode = sc.nextInt();
+                    System.out.println("email");
+                    String email = sc.next();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/kseb_db", "root", "");
+                        String sql = "INSERT INTO `customer`(`Name`, `Address`, `Phone_num`, `Cust_code`, `Email`) VALUES (?,?,?,?,?)";
+                        PreparedStatement stmt = con.prepareStatement(sql);
+                        stmt.setString(1,name);
+                        stmt.setString(2,address);
+                        stmt.setString(3,phone);
+                        stmt.setInt(4,custCode);
+                        stmt.setString(5,email);
+                        stmt.executeUpdate();
+
+                    }
+                    catch (Exception e){
+                        System.out.println(e);
+                    }
 
                     break;
                 case 2:
